@@ -99,7 +99,7 @@ namespace CamUnsnap
 
         float CameraSensitivity
         { get => Plugin.CameraSensitivity.Value; }
-        
+
         float CameraSmoothing
         { get => Plugin.CameraSmoothing.Value; }
 
@@ -165,27 +165,28 @@ namespace CamUnsnap
                         }
                         Camera.current.fieldOfView = cacheFOV;
                     }
-                } else
+                }
+                else
                 {
                     if (player != null)
                     {
                         player.PointOfView = EPointOfView.FreeCamera;
                         player.PointOfView = EPointOfView.ThirdPerson;
                     }
-                    
+
                     cacheFOV = Camera.current.fieldOfView;
                     if (Plugin.OverrideGameRestriction.Value) SendNotificaiton("Session Override is enabled, player and positioning options are ignored, and controlling the camera outside of a raid may cause issues.\nYou've been warned...");
                 }
                 mCamUnsnapped = value;
             }
         }
-        
+
         void Update()
         {
-            if (Input.GetKeyDown(Plugin.ToggleCameraSnap.Value.MainKey)) 
+            if (Input.GetKeyDown(Plugin.ToggleCameraSnap.Value.MainKey))
                 CamUnsnapped = !CamUnsnapped;
 
-            if (Input.GetKeyDown(Plugin.CameraMouse.Value.MainKey)) 
+            if (Input.GetKeyDown(Plugin.CameraMouse.Value.MainKey))
                 CamViewInControl = !CamViewInControl;
 
             if (Input.GetKeyDown(Plugin.ChangeGamespeed.Value.MainKey) && CamUnsnapped)
@@ -255,7 +256,8 @@ namespace CamUnsnap
                             {
                                 Recording = true;
                                 SendNotificaiton("Recording Resumed", false);
-                            } else
+                            }
+                            else
                             {
                                 SendNotificaiton($"Cannot resume recording\nNo previous recording exists, press '{Plugin.BeginRecord.Value}' to start a new one");
                             }
@@ -269,42 +271,44 @@ namespace CamUnsnap
 
                         player.ActiveHealthController.SetDamageCoeff(Plugin.ImmuneInCamera.Value ? 0f : player.ActiveHealthController.DamageCoeff != 1f && !playerAirborne ? 1f : 0f);
 
-                        if (Input.GetKeyDown(Plugin.RememberPos.Value.MainKey)) 
+                        if (Input.GetKeyDown(Plugin.RememberPos.Value.MainKey))
                             MemoryPos = gameCamera.transform.position;
 
                         if (Input.GetKeyDown(Plugin.LockPlayerMovement.Value.MainKey))
                         {
-                            if (!Detours.Any()) 
-                                Detours = new List<Detour>() 
-                                { 
-                                    new Detour(typeof(Player).GetMethod(nameof(Player.Move)).CreateDelegate(player), (Action)BlankOverride), 
-                                    new Detour(typeof(Player).GetMethod(nameof(Player.Rotate)).CreateDelegate(player), (Action)BlankOverride), 
+                            if (!Detours.Any())
+                                Detours = new List<Detour>()
+                                {
+                                    new Detour(typeof(Player).GetMethod(nameof(Player.Move)).CreateDelegate(player), (Action)BlankOverride),
+                                    new Detour(typeof(Player).GetMethod(nameof(Player.Rotate)).CreateDelegate(player), (Action)BlankOverride),
                                     new Detour(typeof(Player).GetMethod(nameof(Player.SlowLean)).CreateDelegate(player), (Action)BlankOverride),
                                     new Detour(typeof(Player).GetMethod(nameof(Player.ChangePose)).CreateDelegate(player), (Action)BlankOverride),
                                     new Detour(typeof(Player).GetMethod(nameof(Player.Jump)).CreateDelegate(player), (Action)BlankOverride),
                                     new Detour(typeof(Player).GetMethod(nameof(Player.ToggleProne)).CreateDelegate(player), (Action)BlankOverride)
                                 };
-                            else 
-                            { 
-                                Detours.ForEach((Detour det) => det.Dispose()); 
-                                Detours.Clear(); 
+                            else
+                            {
+                                Detours.ForEach((Detour det) => det.Dispose());
+                                Detours.Clear();
                             };
                         }
 
                         if (Input.GetKeyDown(Plugin.AddToMemPosList.Value.MainKey))
                             MemoryPosList.Add(gameCamera.transform.position);
-                    
+
                         if (Input.GetKeyDown(Plugin.AdvanceList.Value.MainKey))
                         {
                             if (MemoryPosList[currentListIndex + 1] != null)
                             {
                                 currentListIndex++;
                                 gameCamera.transform.position = MemoryPosList[currentListIndex];
-                            } else if (MemoryPosList.First() != null)
+                            }
+                            else if (MemoryPosList.First() != null)
                             {
                                 currentListIndex = 0;
                                 gameCamera.transform.position = MemoryPosList.First();
-                            } else
+                            }
+                            else
                             {
                                 currentListIndex = 0;
                                 SendNotificaiton("No valid Vector3 in Memory Position List to move to.");
@@ -314,7 +318,8 @@ namespace CamUnsnap
                         if (Input.GetKeyDown(Plugin.ClearList.Value.MainKey))
                             MemoryPosList.Clear();
 
-                    } else if (!Ready() && MemoryPosList.Any())
+                    }
+                    else if (!Ready() && MemoryPosList.Any())
                     {
                         MemoryPosList.Clear();
                         CamUnsnapped = false;
@@ -364,7 +369,8 @@ namespace CamUnsnap
                     if (Input.GetKey(Plugin.RotateRight.Value.MainKey))
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? -1f * CameraSensitivity : -1f);
 
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     SendNotificaiton($"Camera machine broke =>\n{e.Message}");
                     Plugin.logger.LogError(e);
@@ -386,7 +392,7 @@ namespace CamUnsnap
 
         void SendNotificaiton(string message, bool warn = true) => NotificationManagerClass.DisplayMessageNotification(message, ENotificationDurationType.Long, warn ? ENotificationIconType.Alert : ENotificationIconType.Default);
 
-        public static void BlankOverride() {} // override so player doesn't move
+        public static void BlankOverride() { } // override so player doesn't move
 
         bool Ready() => gameWorld != null && gameWorld.AllPlayers != null && gameWorld.AllPlayers.Count > 0;
     }

@@ -50,7 +50,7 @@ namespace CamUnsnap
         private void Awake()
         {
             logger = Logger;
-            ToggleCameraSnap = Config.Bind(KeybindSectionName, "Toggle Camera Snap", new KeyboardShortcut(KeyCode.C, KeyCode.LeftControl),"Allows you to unsnap the camera at will");
+            ToggleCameraSnap = Config.Bind(KeybindSectionName, "Toggle Camera Snap", new KeyboardShortcut(KeyCode.C, KeyCode.LeftControl), "Allows you to unsnap the camera at will");
             CameraMouse = Config.Bind(KeybindSectionName, "Switch camera control to mouse", new KeyboardShortcut(KeyCode.Equals), "Lets you contol the camera viewport with the mouse, switch between enabling to pose your character");
             CamForward = Config.Bind(KeybindSectionName, "Move Forward", new KeyboardShortcut(KeyCode.UpArrow), "Moves the camera forwards");
             CamBack = Config.Bind(KeybindSectionName, "Move Back", new KeyboardShortcut(KeyCode.DownArrow), "Moves the camera backwards");
