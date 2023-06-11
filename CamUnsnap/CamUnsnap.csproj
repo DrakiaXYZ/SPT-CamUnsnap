@@ -12,55 +12,40 @@
 
   <ItemGroup>
     <Reference Include="Aki.Common">
-      <HintPath>..\..\dependencies\Aki.Common.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\Aki.Common.dll</HintPath>
     </Reference>
     <Reference Include="Aki.Reflection">
-      <HintPath>..\..\dependencies\Aki.Reflection.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\Aki.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\dependencies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>..\..\dependencies\BepInEx.dll</HintPath>
+      <HintPath>..\..\..\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="Comfort">
-      <HintPath>..\..\dependencies\Comfort.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\dependencies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\dependencies\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\dependencies\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\dependencies\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\..\dependencies\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\UnityEngine.InputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\dependencies\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>..\..\..\EscapeFromTarkov_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\dependencies\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\dependencies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\dependencies\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\dependencies\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\dependencies\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\dependencies\MonoMod.Utils.dll</HintPath>
+      <HintPath>..\..\..\BepInEx\Core\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
   </ItemGroup>
 
