@@ -183,13 +183,13 @@ namespace CamUnsnap
 
         void Update()
         {
-            if (Input.GetKeyDown(Plugin.ToggleCameraSnap.Value.MainKey))
+            if (Plugin.ToggleCameraSnap.Value.IsDown())
                 CamUnsnapped = !CamUnsnapped;
 
-            if (Input.GetKeyDown(Plugin.CameraMouse.Value.MainKey))
+            if (Plugin.CameraMouse.Value.IsDown())
                 CamViewInControl = !CamViewInControl;
 
-            if (Input.GetKeyDown(Plugin.ChangeGamespeed.Value.MainKey) && CamUnsnapped)
+            if (Plugin.ChangeGamespeed.Value.IsDown() && CamUnsnapped)
                 GamespeedChanged = !GamespeedChanged;
 
             if (CamUnsnapped)
@@ -205,7 +205,7 @@ namespace CamUnsnap
                             PathRecording = new TransformRecording(gameCamera);
                         }
 
-                        if (Input.GetKeyDown(Plugin.GoToPos.Value.MainKey))
+                        if (Plugin.GoToPos.Value.IsDown())
                         {
                             if (MemoryPos == null)
                                 SendNotificaiton("No memory pos to move camera to.");
@@ -213,10 +213,10 @@ namespace CamUnsnap
                                 gameCamera.transform.position = MemoryPos;
                         }
 
-                        if (Input.GetKeyDown(Plugin.HideUI.Value.MainKey))
+                        if (Plugin.HideUI.Value.IsDown())
                             UIEnabled = !UIEnabled;
 
-                        if (Input.GetKeyDown(Plugin.PlayRecord.Value.MainKey))
+                        if (Plugin.PlayRecord.Value.IsDown())
                             playingPath = true;
 
                         if (Recording)
@@ -240,17 +240,17 @@ namespace CamUnsnap
                             return;
                         }
 
-                        if (Input.GetKeyDown(Plugin.MovePlayerToCam.Value.MainKey))
+                        if (Plugin.MovePlayerToCam.Value.IsDown())
                             MovePlayer();
 
-                        if (Input.GetKeyDown(Plugin.BeginRecord.Value.MainKey))
+                        if (Plugin.BeginRecord.Value.IsDown())
                         {
                             Recording = true;
                             PathRecording.Clear();
                             SendNotificaiton("Recording Started", false);
                         }
 
-                        if (Input.GetKeyDown(Plugin.ResumeRecord.Value.MainKey))
+                        if (Plugin.ResumeRecord.Value.IsDown())
                         {
                             if (PathRecording.Any())
                             {
@@ -263,7 +263,7 @@ namespace CamUnsnap
                             }
                         }
 
-                        if (Input.GetKeyDown(Plugin.StopRecord.Value.MainKey))
+                        if (Plugin.StopRecord.Value.IsDown())
                         {
                             Recording = false;
                             SendNotificaiton("Recording Stopped", false);
@@ -271,10 +271,10 @@ namespace CamUnsnap
 
                         player.ActiveHealthController.SetDamageCoeff(Plugin.ImmuneInCamera.Value ? 0f : player.ActiveHealthController.DamageCoeff != 1f && !playerAirborne ? 1f : 0f);
 
-                        if (Input.GetKeyDown(Plugin.RememberPos.Value.MainKey))
+                        if (Plugin.RememberPos.Value.IsDown())
                             MemoryPos = gameCamera.transform.position;
 
-                        if (Input.GetKeyDown(Plugin.LockPlayerMovement.Value.MainKey))
+                        if (Plugin.LockPlayerMovement.Value.IsDown())
                         {
                             if (!Detours.Any())
                                 Detours = new List<Detour>()
@@ -293,10 +293,10 @@ namespace CamUnsnap
                             };
                         }
 
-                        if (Input.GetKeyDown(Plugin.AddToMemPosList.Value.MainKey))
+                        if (Plugin.AddToMemPosList.Value.IsDown())
                             MemoryPosList.Add(gameCamera.transform.position);
 
-                        if (Input.GetKeyDown(Plugin.AdvanceList.Value.MainKey))
+                        if (Plugin.AdvanceList.Value.IsDown())
                         {
                             if (MemoryPosList[currentListIndex + 1] != null)
                             {
@@ -315,7 +315,7 @@ namespace CamUnsnap
                             }
                         }
 
-                        if (Input.GetKeyDown(Plugin.ClearList.Value.MainKey))
+                        if (Plugin.ClearList.Value.IsDown())
                             MemoryPosList.Clear();
 
                     }
@@ -327,25 +327,25 @@ namespace CamUnsnap
                     }
 
                     float delta = !GamespeedChanged ? Time.deltaTime : Time.fixedDeltaTime;
-                    float fastMove = Input.GetKey(Plugin.FastMove.Value.MainKey) ? Plugin.FastMoveMult.Value : 1f;
+                    float fastMove = Plugin.FastMove.Value.IsPressed() ? Plugin.FastMoveMult.Value : 1f;
                     Camera.current.fieldOfView = Plugin.CameraFOV.Value;
 
-                    if (Input.GetKey(Plugin.CamLeft.Value.MainKey))
+                    if (Plugin.CamLeft.Value.IsPressed())
                         gameCamera.transform.position += (-gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamRight.Value.MainKey))
+                    if (Plugin.CamRight.Value.IsPressed())
                         gameCamera.transform.position += (gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamForward.Value.MainKey))
+                    if (Plugin.CamForward.Value.IsPressed())
                         gameCamera.transform.position += (gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamBack.Value.MainKey))
+                    if (Plugin.CamBack.Value.IsPressed())
                         gameCamera.transform.position += (-gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamUp.Value.MainKey))
+                    if (Plugin.CamUp.Value.IsPressed())
                         gameCamera.transform.position += (gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamDown.Value.MainKey))
+                    if (Plugin.CamDown.Value.IsPressed())
                         gameCamera.transform.position += (-gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
                     if (CamViewInControl)
@@ -363,10 +363,10 @@ namespace CamUnsnap
 
                     }
 
-                    if (Input.GetKey(Plugin.RotateLeft.Value.MainKey))
+                    if (Plugin.RotateLeft.Value.IsPressed())
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? 1f * CameraSensitivity : 1f);
 
-                    if (Input.GetKey(Plugin.RotateRight.Value.MainKey))
+                    if (Plugin.RotateRight.Value.IsPressed())
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? -1f * CameraSensitivity : -1f);
 
                 }
