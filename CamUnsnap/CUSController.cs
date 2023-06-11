@@ -327,25 +327,25 @@ namespace CamUnsnap
                     }
 
                     float delta = !GamespeedChanged ? Time.deltaTime : Time.fixedDeltaTime;
-                    float fastMove = Plugin.FastMove.Value.IsPressed() ? Plugin.FastMoveMult.Value : 1f;
+                    float fastMove = Input.GetKey(Plugin.FastMove.Value.MainKey) ? Plugin.FastMoveMult.Value : 1f;
                     Camera.current.fieldOfView = Plugin.CameraFOV.Value;
 
-                    if (Plugin.CamLeft.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamLeft.Value.MainKey))
                         gameCamera.transform.position += (-gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Plugin.CamRight.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamRight.Value.MainKey))
                         gameCamera.transform.position += (gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Plugin.CamForward.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamForward.Value.MainKey))
                         gameCamera.transform.position += (gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Plugin.CamBack.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamBack.Value.MainKey))
                         gameCamera.transform.position += (-gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Plugin.CamUp.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamUp.Value.MainKey))
                         gameCamera.transform.position += (gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
-                    if (Plugin.CamDown.Value.IsPressed())
+                    if (Input.GetKey(Plugin.CamDown.Value.MainKey))
                         gameCamera.transform.position += (-gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
                     if (CamViewInControl)
@@ -363,10 +363,10 @@ namespace CamUnsnap
 
                     }
 
-                    if (Plugin.RotateLeft.Value.IsPressed())
+                    if (Input.GetKey(Plugin.RotateLeft.Value.MainKey))
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? 1f * CameraSensitivity : 1f);
 
-                    if (Plugin.RotateRight.Value.IsPressed())
+                    if (Input.GetKey(Plugin.RotateRight.Value.MainKey))
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? -1f * CameraSensitivity : -1f);
 
                 }
