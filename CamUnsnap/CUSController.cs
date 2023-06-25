@@ -9,6 +9,7 @@ using EFT.Communications;
 using MonoMod.RuntimeDetour;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using BepInEx.Configuration;
 
 namespace CamUnsnap
 {
@@ -183,13 +184,13 @@ namespace CamUnsnap
 
         void Update()
         {
-            if (Plugin.ToggleCameraSnap.Value.IsDown())
+            if (IsKeyPressed(Plugin.ToggleCameraSnap.Value))
                 CamUnsnapped = !CamUnsnapped;
 
-            if (Plugin.CameraMouse.Value.IsDown())
+            if (IsKeyPressed(Plugin.CameraMouse.Value))
                 CamViewInControl = !CamViewInControl;
 
-            if (Plugin.ChangeGamespeed.Value.IsDown() && CamUnsnapped)
+            if (IsKeyPressed(Plugin.ChangeGamespeed.Value) && CamUnsnapped)
                 GamespeedChanged = !GamespeedChanged;
 
             if (CamUnsnapped)
@@ -205,7 +206,7 @@ namespace CamUnsnap
                             PathRecording = new TransformRecording(gameCamera);
                         }
 
-                        if (Plugin.GoToPos.Value.IsDown())
+                        if (IsKeyPressed(Plugin.GoToPos.Value))
                         {
                             if (MemoryPos == null)
                                 SendNotificaiton("No memory pos to move camera to.");
@@ -213,10 +214,10 @@ namespace CamUnsnap
                                 gameCamera.transform.position = MemoryPos;
                         }
 
-                        if (Plugin.HideUI.Value.IsDown())
+                        if (IsKeyPressed(Plugin.HideUI.Value))
                             UIEnabled = !UIEnabled;
 
-                        if (Plugin.PlayRecord.Value.IsDown())
+                        if (IsKeyPressed(Plugin.PlayRecord.Value))
                             playingPath = true;
 
                         if (Recording)
@@ -240,17 +241,17 @@ namespace CamUnsnap
                             return;
                         }
 
-                        if (Plugin.MovePlayerToCam.Value.IsDown())
+                        if (IsKeyPressed(Plugin.MovePlayerToCam.Value))
                             MovePlayer();
 
-                        if (Plugin.BeginRecord.Value.IsDown())
+                        if (IsKeyPressed(Plugin.BeginRecord.Value))
                         {
                             Recording = true;
                             PathRecording.Clear();
                             SendNotificaiton("Recording Started", false);
                         }
 
-                        if (Plugin.ResumeRecord.Value.IsDown())
+                        if (IsKeyPressed(Plugin.ResumeRecord.Value))
                         {
                             if (PathRecording.Any())
                             {
@@ -263,7 +264,7 @@ namespace CamUnsnap
                             }
                         }
 
-                        if (Plugin.StopRecord.Value.IsDown())
+                        if (IsKeyPressed(Plugin.StopRecord.Value))
                         {
                             Recording = false;
                             SendNotificaiton("Recording Stopped", false);
@@ -271,10 +272,10 @@ namespace CamUnsnap
 
                         player.ActiveHealthController.SetDamageCoeff(Plugin.ImmuneInCamera.Value ? 0f : player.ActiveHealthController.DamageCoeff != 1f && !playerAirborne ? 1f : 0f);
 
-                        if (Plugin.RememberPos.Value.IsDown())
+                        if (IsKeyPressed(Plugin.RememberPos.Value))
                             MemoryPos = gameCamera.transform.position;
 
-                        if (Plugin.LockPlayerMovement.Value.IsDown())
+                        if (IsKeyPressed(Plugin.LockPlayerMovement.Value))
                         {
                             if (!Detours.Any())
                                 Detours = new List<Detour>()
@@ -293,10 +294,10 @@ namespace CamUnsnap
                             };
                         }
 
-                        if (Plugin.AddToMemPosList.Value.IsDown())
+                        if (IsKeyPressed(Plugin.AddToMemPosList.Value))
                             MemoryPosList.Add(gameCamera.transform.position);
 
-                        if (Plugin.AdvanceList.Value.IsDown())
+                        if (IsKeyPressed(Plugin.AdvanceList.Value))
                         {
                             if (MemoryPosList[currentListIndex + 1] != null)
                             {
@@ -315,7 +316,7 @@ namespace CamUnsnap
                             }
                         }
 
-                        if (Plugin.ClearList.Value.IsDown())
+                        if (IsKeyPressed(Plugin.ClearList.Value))
                             MemoryPosList.Clear();
 
                     }
@@ -327,25 +328,25 @@ namespace CamUnsnap
                     }
 
                     float delta = !GamespeedChanged ? Time.deltaTime : Time.fixedDeltaTime;
-                    float fastMove = Input.GetKey(Plugin.FastMove.Value.MainKey) ? Plugin.FastMoveMult.Value : 1f;
+                    float fastMove = IsKeyDown(Plugin.FastMove.Value) ? Plugin.FastMoveMult.Value : 1f;
                     Camera.current.fieldOfView = Plugin.CameraFOV.Value;
 
-                    if (Input.GetKey(Plugin.CamLeft.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamLeft.Value))
                         gameCamera.transform.position += (-gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamRight.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamRight.Value))
                         gameCamera.transform.position += (gameCamera.transform.right * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamForward.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamForward.Value))
                         gameCamera.transform.position += (gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamBack.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamBack.Value))
                         gameCamera.transform.position += (-gameCamera.transform.forward * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamUp.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamUp.Value))
                         gameCamera.transform.position += (gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
-                    if (Input.GetKey(Plugin.CamDown.Value.MainKey))
+                    if (IsKeyDown(Plugin.CamDown.Value))
                         gameCamera.transform.position += (-gameCamera.transform.up * MovementSpeed * fastMove * delta);
 
                     if (CamViewInControl)
@@ -363,10 +364,10 @@ namespace CamUnsnap
 
                     }
 
-                    if (Input.GetKey(Plugin.RotateLeft.Value.MainKey))
+                    if (IsKeyDown(Plugin.RotateLeft.Value))
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? 1f * CameraSensitivity : 1f);
 
-                    if (Input.GetKey(Plugin.RotateRight.Value.MainKey))
+                    if (IsKeyDown(Plugin.RotateRight.Value))
                         gameCamera.transform.localEulerAngles += new Vector3(0, 0, Plugin.RotateUsesSens.Value ? -1f * CameraSensitivity : -1f);
 
                 }
@@ -395,5 +396,43 @@ namespace CamUnsnap
         public static void BlankOverride() { } // override so player doesn't move
 
         bool Ready() => gameWorld != null && gameWorld.AllPlayers != null && gameWorld.AllPlayers.Count > 0;
+
+        // Custom KeyDown check that handles modifiers, but also lets you hit more than one key at a time
+        bool IsKeyDown(KeyboardShortcut key)
+        {
+            if (!Input.GetKey(key.MainKey))
+            {
+                return false;
+            }
+
+            foreach (var modifier in key.Modifiers)
+            {
+                if (!Input.GetKey(modifier))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Custom KeyPressed check that handles modifiers, but also lets you hit more than one key at a time
+        bool IsKeyPressed(KeyboardShortcut key)
+        {
+            if (!Input.GetKeyDown(key.MainKey))
+            {
+                return false;
+            }
+
+            foreach (var modifier in key.Modifiers)
+            {
+                if (!Input.GetKey(modifier))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
