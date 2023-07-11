@@ -90,7 +90,7 @@ namespace CamUnsnap
         bool CamViewInControl { get; set; } = false;
 
         Player player
-        { get => gameWorld.AllPlayers[0]; }
+        { get => gameWorld.MainPlayer; }
 
         GameWorld gameWorld
         { get => Singleton<GameWorld>.Instance; }
@@ -135,7 +135,7 @@ namespace CamUnsnap
 
         bool playerAirborne
         {
-            get => !player.CharacterControllerCommon.isGrounded;
+            get => !player.GetCharacterControllerCommon().isGrounded;
         }
 
         bool CamUnsnapped
@@ -395,7 +395,7 @@ namespace CamUnsnap
 
         public static void BlankOverride() { } // override so player doesn't move
 
-        bool Ready() => gameWorld != null && gameWorld.AllPlayers != null && gameWorld.AllPlayers.Count > 0;
+        bool Ready() => gameWorld != null && gameWorld.AllAlivePlayersList != null && gameWorld.AllAlivePlayersList.Count > 0;
 
         // Custom KeyDown check that handles modifiers, but also lets you hit more than one key at a time
         bool IsKeyDown(KeyboardShortcut key)

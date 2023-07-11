@@ -4,9 +4,9 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>Kobrakon-CamUnsnap</AssemblyName>
     <Copyright>© 2022 Zachary Braden</Copyright>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion></AssemblyVersion>
+    <FileVersion></FileVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
