@@ -5,7 +5,7 @@ using BepInEx.Logging;
 
 namespace CamUnsnap
 {
-    [BepInPlugin("com.kobrakon.camunsnap", "CamUnsnap", "1.1.0")]
+    [BepInPlugin("com.kobrakon.camunsnap", "CamUnsnap", "1.2.0")]
     public class Plugin : BaseUnityPlugin
     {
         private GameObject Hook;
